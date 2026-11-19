@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Nifty100 Momentum Futures Strategy — Trading Report</title>
+<style>
+  :root{
+    --ink:#15171c; --ink2:#45564d; --muted:#7c8a83; --line:#e3e8e4;
+    --bg:#fbfcfb; --card:#ffffff; --accent:#1d4ed8; --accent2:#3b82f6;
+    --pos:#0ca30c; --neg:#d03b3b; --amber:#ba7517;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.65;font-size:16px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:960px;margin:0 auto;padding:48px 26px 90px}
+  header{border-bottom:2px solid var(--accent);padding-bottom:22px}
+  .tag{display:inline-block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--accent);font-weight:600;margin-bottom:8px}
+  h1{font-size:30px;line-height:1.2;margin:0 0 8px;font-weight:650}
+  h2{font-size:22px;margin:54px 0 6px;font-weight:600;letter-spacing:-.01em}
+  h2 .n{color:var(--muted);font-weight:500;margin-right:10px}
+  h3{font-size:16.5px;margin:26px 0 6px;font-weight:600}
+  p{margin:10px 0;color:var(--ink2)}
+  .sub{color:var(--muted);font-size:15px;margin-top:2px}
+  .lead{font-size:17px;color:var(--ink)}
+  section{border-top:1px solid var(--line);padding-top:4px}
+  table{border-collapse:collapse;width:100%;margin:16px 0;font-size:14.5px}
+  th,td{padding:9px 12px;text-align:right;border-bottom:1px solid var(--line)}
+  th:first-child,td:first-child{text-align:left}
+  thead th{color:var(--muted);font-weight:600;font-size:12.5px;text-transform:uppercase;
+    letter-spacing:.04em;border-bottom:1.5px solid var(--line)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 24px;margin:18px 0}
+  .paramtbl td:first-child{font-weight:600;color:var(--ink);width:32%}
+  .paramtbl td{text-align:left}
+  code{background:#eef3f0;padding:1px 6px;border-radius:5px;font-size:13px;color:var(--accent)}
+  ul{color:var(--ink2);margin:10px 0;padding-left:22px}
+  li{margin:7px 0}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:14px 0}
+  .kpi{background:#f5f7fb;border-radius:12px;padding:14px 16px}
+  .kpi .l{font-size:12.5px;color:var(--muted);margin-bottom:3px}
+  .kpi .v{font-size:23px;font-weight:650;line-height:1.1}
+  .kpi .d{font-size:12px;color:var(--muted);margin-top:2px}
+  .hm{border-collapse:separate;border-spacing:3px;width:100%;font-size:12.5px;font-variant-numeric:tabular-nums;margin:10px 0}
+  .hm th{color:var(--muted);font-weight:500;padding:2px 4px;text-align:center}
+  .hm th:first-child{text-align:left}
+  .hm td{text-align:center;padding:7px 3px;border-radius:5px}
+  .hm td.yr{color:var(--muted);font-weight:500;text-align:left}
+  .scale{display:flex;align-items:center;gap:10px;margin:8px 0 2px;font-size:12px;color:var(--muted)}
+  .scale .bar{flex:1;height:9px;border-radius:5px;background:linear-gradient(to right,#d03b3b,#f0efec,#0ca30c)}
+  .vcard{border-left:4px solid var(--accent);background:#f5f7fb;border-radius:0 10px 10px 0;padding:14px 18px;margin:16px 0}
+  .vcard h3{margin:0 0 4px;color:var(--accent)}
+  .note{background:#fff8ec;border:1px solid #f0dcb4;border-left:4px solid var(--amber);
+    border-radius:0 10px 10px 0;padding:14px 18px;margin:18px 0;font-size:14.5px;color:#5c4415}
+  .best{color:var(--accent);font-weight:650}
+  .win{color:var(--pos);font-weight:600}.los{color:var(--neg);font-weight:600}
+  .foot{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+  .cycle{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
+  .step{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .step .s{font-size:12px;color:var(--accent);font-weight:600;margin-bottom:4px}
+  .step .t{font-size:14px;color:var(--ink2)}
+  @media(max-width:720px){.wrap{padding:32px 16px 60px}h1{font-size:24px}.hm{font-size:11px}}
+</style>
+<style id="site-palette">
+:root:root:root, :root:root:root[data-theme]{ --bg:#fff; --card:#fff; --ink:#15171c; --ink2:#454a54; --muted:#737986; --line:#dde2ea; --accent:#1d4ed8; --accent2:#3b82f6; }
+
+
+.site-back{font:13px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;max-width:68rem;margin:0 auto;
+  padding:14px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:baseline;color:#737986;
+  border-bottom:1px solid #dde2ea;background:#fff}
+.site-back a{color:#1d4ed8;text-decoration:none;border-bottom:1px solid #1d4ed8}
+@media print{.site-back{display:none}}
+</style>
+<meta name="robots" content="noindex">
+</head>
+<body>
+<div class="site-back"><a href="/">&larr; Aryansh Kabra</a><span>Research report. Backtests, not live results.</span></div>
+<div class="wrap">
+
+<header>
+  <div class="tag">Systematic futures trading · Indian equities</div>
+  <h1>Nifty100 Momentum Futures Rotation</h1>
+  <p class="sub">A monthly stock-futures trading strategy: every expiry, buy futures on the 20 strongest 9-month momentum stocks, hold one month, square off, repeat. This report explains the strategy from scratch and reports monthly returns for four risk-management versions (no stop-loss, plus three stop-loss designs), 2018 – mid-2026.</p>
+</header>
+
+<!-- ===== 01 PLAIN ENGLISH ===== -->
+<section>
+<h2><span class="n">01</span>What this strategy does — in plain English</h2>
+<p class="lead">Every month we bet on momentum: we buy the stocks that have been rising the most, hold them for one month using stock futures, then re-pick and repeat. The idea is simple — <b>winners tend to keep winning for a while</b> — and we act on it mechanically, with no discretion.</p>
+<p>Concretely, on each monthly-expiry day we rank all 100 large-cap stocks by how much they rose over the previous 9 months, take the top 20, and put an equal amount of money into the <b>futures contract</b> of each. One month later, on the next expiry, we close all 20 positions, re-rank, and enter a fresh set of 20. Profits and losses are booked each month.</p>
+<p>We trade <b>futures instead of buying the shares outright</b> because futures let us take the position with far less cash and are the natural instrument for a monthly trade that expires. The trade-off is a small holding cost each month (explained below), which we model as a flat drag.</p>
+</section>
+
+<!-- ===== 02 THE MONTHLY CYCLE ===== -->
+<section>
+<h2><span class="n">02</span>The monthly cycle</h2>
+<div class="cycle">
+  <div class="step"><div class="s">1 · RANK</div><div class="t">On expiry day, rank all 100 Nifty100 stocks by their trailing 9-month return.</div></div>
+  <div class="step"><div class="s">2 · SELECT</div><div class="t">Take the top 20 strongest. Ignore the other 80.</div></div>
+  <div class="step"><div class="s">3 · ENTER</div><div class="t">Buy next-month futures of all 20 at the closing price — ₹5 lakh notional each.</div></div>
+  <div class="step"><div class="s">4 · HOLD</div><div class="t">Hold for one month. (Stop-loss rules — versions 2-4 — may exit a name early.)</div></div>
+  <div class="step"><div class="s">5 · SQUARE OFF</div><div class="t">On the next expiry, close all positions at the close. Book the profit/loss.</div></div>
+  <div class="step"><div class="s">6 · REPEAT</div><div class="t">Immediately re-rank and enter the new top 20. The cycle never breaks.</div></div>
+</div>
+</section>
+
+<!-- ===== 03 PARAMETERS ===== -->
+<section>
+<h2><span class="n">03</span>Every parameter, defined</h2>
+<div class="card">
+<table class="paramtbl"><tbody>
+<tr><td>Universe</td><td>The 100 current Nifty100 stocks (large caps). Daily prices come from 1-minute data aggregated to the Indian (IST) trading session.</td></tr>
+<tr><td>Momentum signal</td><td>Trailing <b>9-month</b> price return of each stock, measured on the entry expiry: <code>close(entry) / close(9 months earlier) − 1</code>. Pure price momentum — no fundamentals.</td></tr>
+<tr><td>Ranking &amp; selection</td><td>Sort all 100 by that 9-month return, highest first. Hold the <b>top 20</b>.</td></tr>
+<tr><td>Instrument</td><td><b>Single-stock futures</b>, entered at the expiry close. (We use each stock's equity price as a proxy for its future, since futures history isn't loaded — see costs.)</td></tr>
+<tr><td>Position size</td><td><b>₹5,00,000 notional per stock × 20 = ₹1 crore</b> deployed every month. Long-only.</td></tr>
+<tr><td>Rebalance frequency</td><td><b>Monthly</b>, on the monthly-expiry day.</td></tr>
+<tr><td>Expiry-day rule</td><td><b>Last Thursday</b> of the month up to Aug 2025; <b>last Tuesday</b> from Sep 2025 onward (NSE's rule change). If that day is a holiday, the trade rolls to the previous trading day.</td></tr>
+<tr><td>Futures carry cost</td><td>A flat <b>0.5% of the ₹1 crore deployed (= ₹50,000) charged every month</b>, representing the premium/carry paid to hold futures instead of shares.</td></tr>
+<tr><td>Capital treatment</td><td><b>Non-compounding.</b> A fresh ₹1 crore (₹5L × 20) is deployed every month regardless of past profits. Profits accumulate in a separate cash pile and are <b>not</b> added back to the base. So a year's return is simply the <b>sum</b> of its monthly returns, and ₹ P&amp;L = ₹1 crore × return.</td></tr>
+<tr><td>Return attribution</td><td>Each trade's return is booked to the <b>month it is squared off</b> (entered on the previous expiry, closed on this month's expiry).</td></tr>
+<tr><td>Benchmark context</td><td>Chosen from an earlier study where a 9-month lookback sat on a robust performance plateau for this universe.</td></tr>
+</tbody></table>
+</div>
+<p class="note"><b>How to read a monthly return.</b> Because ₹5L is deployed per stock and there are 20 of them, one month's percentage return equals the <b>equal-weighted average return of the 20 stocks, minus the 0.5% carry</b>. Example: if the 20 stocks averaged +4% over the month, the reported figure is +4% − 0.5% = <b>+3.5%</b>, i.e. +₹3.5 lakh on the ₹1 crore.</p>
+</section>
+
+<!-- ===== 04 THE FOUR VERSIONS ===== -->
+<section>
+<h2><span class="n">04</span>The four versions — risk management</h2>
+<p>The base engine is identical in all four; they differ only in the <b>stop-loss</b> — the rule that can exit a losing position before the month ends. A stop-loss caps how much any single stock can lose you.</p>
+
+<div class="vcard"><h3>Version 0 — No stop-loss (baseline)</h3>
+<p style="margin:0">Every position is simply held from entry expiry to exit expiry. No early exits. This is the raw momentum edge, and the yardstick the stops are judged against.</p></div>
+
+<div class="vcard"><h3>Version 1 — Fixed 10% stop</h3>
+<p style="margin:0">Each position has a hard stop 10% below its entry price. If the stock trades down 10% <b>intraday</b> it's sold at the stop level; if it <b>gaps</b> below the stop overnight it's sold at the 9:16 AM open (often worse than −10%). Once stopped, that slot sits in cash for the rest of the month — no replacement.</p></div>
+
+<div class="vcard"><h3>Version 2 — Trailing 10% stop (on daily close)</h3>
+<p style="margin:0">The stop starts 10% below entry but <b>ratchets upward</b> every time the stock makes a new closing high — always 10% below the highest close since entry, never moving down. Checked on the daily close. This lets winners run and can lock in a <b>profit</b> (a stock that ran +30% then fell 10% off its peak exits around +17%).</p></div>
+
+<div class="vcard"><h3>Version 3 — Volatility-adjusted stop (ATR, fixed at entry)</h3>
+<p style="margin:0">Each position gets its <b>own</b> stop width based on its volatility: stop = entry − 3.05 × ATR(14), calibrated so the average width across names ≈ 10%. A calm stock might get a 3.5% stop, a jumpy one up to 49%. Fixed at entry, checked on close. The point: don't shake out a naturally volatile name on normal noise, but cut a quiet name that starts breaking down.</p></div>
+<p class="sub"><i>ATR (Average True Range) is a standard measure of a stock's typical daily price range — bigger ATR means a jumpier stock.</i></p>
+</section>
+
+<!-- ===== 05 HEADLINE COMPARISON ===== -->
+<section>
+<h2><span class="n">05</span>Head-to-head — the four versions</h2>
+<p>All figures on ₹1 crore deployed monthly, net of the 0.5% carry, non-compounding, over ~101 monthly trades (Jan 2018 – Jun 2026).</p>
+<table>
+<thead><tr><th>Metric</th><th>V0 · No stop</th><th>V1 · Fixed 10%</th><th>V2 · Trailing 10%</th><th>V3 · Vol-adjusted</th></tr></thead>
+<tbody>
+<tr><td>Avg monthly return</td><td>+1.55%</td><td>+1.34%</td><td>+1.44%</td><td class="best">+1.62%</td></tr>
+<tr><td>Avg annualised (12 × mean)</td><td>18.6%</td><td>16.0%</td><td>17.3%</td><td class="best">19.5%</td></tr>
+<tr><td>Cumulative P&amp;L on ₹1 Cr</td><td>+₹1.57 Cr</td><td>+₹1.35 Cr</td><td>+₹1.45 Cr</td><td class="best">+₹1.64 Cr</td></tr>
+<tr><td>Win rate (months)</td><td class="best">62.4%</td><td>53.5%</td><td>58.4%</td><td>57.4%</td></tr>
+<tr><td>Best month</td><td>+24.4%</td><td>+24.4%</td><td>+23.8%</td><td>+24.4%</td></tr>
+<tr><td>Worst month</td><td class="los">−24.1%</td><td class="best">−10.5%</td><td>−11.2%</td><td>−11.8%</td></tr>
+<tr><td>Avg positions stopped / month</td><td>—</td><td>4.6 (23%)</td><td>6.1 (30%)</td><td>3.6 (18%)</td></tr>
+</tbody>
+</table>
+<div class="kpis">
+  <div class="kpi"><div class="l">Best all-round version</div><div class="v" style="color:var(--accent)">V3</div><div class="d">vol-adjusted stop</div></div>
+  <div class="kpi"><div class="l">Highest return</div><div class="v">V3</div><div class="d">+₹1.64 Cr</div></div>
+  <div class="kpi"><div class="l">Smallest worst-month</div><div class="v">V1</div><div class="d">−10.5%</div></div>
+  <div class="kpi"><div class="l">Highest win rate</div><div class="v">V0</div><div class="d">62.4%</div></div>
+</div>
+<h3>What the comparison tells us</h3>
+<ul>
+<li><b>V3 (volatility-adjusted) is the winner</b> — the only stop that <b>beats the no-stop baseline on return</b> (+₹1.64 Cr) while still roughly <b>halving the worst month</b> (−11.8% vs −24.1%). It also stops the fewest positions (18%), because it fires on the right names rather than on noise.</li>
+<li><b>The crude fixed stop (V1) costs the most return</b> — a flat 10% is too tight for high-beta momentum names, so it whipsaws: it fires often and frequently sells stocks that then rebound.</li>
+<li><b>The trailing stop (V2) sits in between</b> — better than the fixed stop because it can bank gains, but it triggers most often (30%).</li>
+<li><b>All stops protect the tail equally well</b> (worst month ≈ −11%), which was the covid crash of March 2020. The real differentiator is how much return each gives up to get that protection — and volatility-scaling gives up none.</li>
+<li><b>No stop design fixes momentum's core weakness</b>: sharp trend reversals (2018, 2025) hurt every version, because the book is concentrated in whatever recently led.</li>
+</ul>
+</section>
+
+<!-- ===== 06 MONTHLY RETURNS ===== -->
+<section>
+<h2><span class="n">06</span>Monthly returns — all four versions</h2>
+<p>Each cell is the strategy's return for the trade <b>squared off that month</b>, in %, on ₹1 crore. Green = gain, red = loss. The bold right column is the year total (arithmetic sum, since capital doesn't compound). Blank cells: 2018 needs one prior expiry after the 9-month lookback becomes available; data ends 29 Jun 2026.</p>
+
+<h3>Version 0 — No stop-loss</h3>
+<div class="kpis">
+  <div class="kpi"><div class="l">Avg month</div><div class="v">+1.55%</div></div>
+  <div class="kpi"><div class="l">Win rate</div><div class="v">62.4%</div></div>
+  <div class="kpi"><div class="l">Worst month</div><div class="v" style="color:var(--neg)">−24.1%</div></div>
+  <div class="kpi"><div class="l">Cumulative P&amp;L</div><div class="v">+₹1.57 Cr</div></div>
+</div>
+<table class="hm" id="hm0"><tbody></tbody></table>
+
+<h3>Version 1 — Fixed 10% stop</h3>
+<div class="kpis">
+  <div class="kpi"><div class="l">Avg month</div><div class="v">+1.34%</div></div>
+  <div class="kpi"><div class="l">Win rate</div><div class="v">53.5%</div></div>
+  <div class="kpi"><div class="l">Worst month</div><div class="v" style="color:var(--pos)">−10.5%</div></div>
+  <div class="kpi"><div class="l">Cumulative P&amp;L</div><div class="v">+₹1.35 Cr</div></div>
+</div>
+<table class="hm" id="hm1"><tbody></tbody></table>
+
+<h3>Version 2 — Trailing 10% stop</h3>
+<div class="kpis">
+  <div class="kpi"><div class="l">Avg month</div><div class="v">+1.44%</div></div>
+  <div class="kpi"><div class="l">Win rate</div><div class="v">58.4%</div></div>
+  <div class="kpi"><div class="l">Worst month</div><div class="v" style="color:var(--pos)">−11.2%</div></div>
+  <div class="kpi"><div class="l">Cumulative P&amp;L</div><div class="v">+₹1.45 Cr</div></div>
+</div>
+<table class="hm" id="hm2"><tbody></tbody></table>
+
+<h3>Version 3 — Volatility-adjusted stop</h3>
+<div class="kpis">
+  <div class="kpi"><div class="l">Avg month</div><div class="v" style="color:var(--accent)">+1.62%</div></div>
+  <div class="kpi"><div class="l">Win rate</div><div class="v">57.4%</div></div>
+  <div class="kpi"><div class="l">Worst month</div><div class="v" style="color:var(--pos)">−11.8%</div></div>
+  <div class="kpi"><div class="l">Cumulative P&amp;L</div><div class="v" style="color:var(--accent)">+₹1.64 Cr</div></div>
+</div>
+<table class="hm" id="hm3"><tbody></tbody></table>
+
+<div class="scale"><span>−15%</span><span class="bar"></span><span>+15%</span></div>
+
+<h3>Year totals side by side (%)</h3>
+<table>
+<thead><tr><th>Year</th><th>V0 · No stop</th><th>V1 · Fixed</th><th>V2 · Trailing</th><th>V3 · Vol-adj</th></tr></thead>
+<tbody id="yeartot"></tbody>
+</table>
+</section>
+
+<!-- ===== 07 CAVEATS ===== -->
+<section>
+<h2><span class="n">07</span>Caveats — before trusting the absolute numbers</h2>
+<div class="note"><b>These are research backtest results, not live trading results.</b> The relative ranking of the four versions is trustworthy; the absolute returns are optimistic for the reasons below.</div>
+<ul>
+<li><b>Survivorship bias:</b> the universe is <em>today's</em> Nifty100. Stocks that dropped out of the index are excluded and current winners are baked in, which inflates returns.</li>
+<li><b>Equity used as a futures proxy:</b> real single-stock futures have basis, roll spreads, margin and mark-to-market dynamics that the flat 0.5%/month carry only crudely approximates.</li>
+<li><b>The 0.5% carry is the single biggest lever</b> — it removes ~6% a year from every version. A different carry assumption would shift all four figures together.</li>
+<li><b>Close-based fills</b> (V0/V2/V3) and a single stop price ignore real liquidity, slippage and impact.</li>
+<li><b>The V3 multiplier (k = 3.05)</b> was calibrated over the whole sample; a live version would set the ATR width from a rolling window (out-of-sample).</li>
+<li><b>One market regime</b> — a single ~8-year, bull-biased Indian sample. Momentum reverses violently in rotation years (2018, 2025).</li>
+</ul>
+</section>
+
+<div class="foot">
+Built from the Nifty100 1-minute dataset (<code>data/nifty100/</code>, 100 symbols). Strategy: 9-month momentum, top-20 equal-weight, monthly-expiry futures rotation, ₹1 Cr deployed (₹5L × 20), non-compounding, 0.5%/month carry. Four stop-loss versions. Research backtest — not investment advice.
+</div>
+
+</div>
+
+<script>
+/* ---------- monthly data for all four versions ---------- */
+const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const V0={2018:{2:-6.61,3:-1.00,4:6.08,5:-5.09,6:-8.18,7:3.57,8:5.52,9:-13.50,10:-8.75,11:4.86,12:-0.78},
+2019:{1:2.36,2:-0.48,3:3.95,4:-1.63,5:1.67,6:1.49,7:-8.11,8:-0.76,9:7.40,10:4.23,11:1.60,12:1.88},
+2020:{1:3.66,2:0.35,3:-24.05,4:15.59,5:-1.77,6:9.39,7:2.50,8:5.25,9:-4.57,10:7.30,11:6.60,12:8.11},
+2021:{1:2.08,2:24.38,3:-1.26,4:13.98,5:6.08,6:0.51,7:4.94,8:0.44,9:6.39,10:4.01,11:5.30,12:-4.19},
+2022:{1:-3.94,2:-7.68,3:7.85,4:-1.04,5:-10.22,6:0.39,7:9.19,8:8.51,9:0.50,10:5.74,11:4.05,12:-0.99},
+2023:{1:-2.64,2:-3.02,3:-0.82,4:5.32,5:2.95,6:9.36,7:10.49,8:1.06,9:6.19,10:-4.79,11:16.96,12:14.26},
+2024:{1:9.13,2:6.94,3:0.35,4:2.96,5:4.83,6:2.91,7:-1.10,8:0.72,9:1.58,10:-8.95,11:2.33,12:-0.68},
+2025:{1:-7.06,2:-6.12,3:3.76,4:2.99,5:0.00,6:2.18,7:-3.90,8:-2.27,9:2.55,10:3.04,11:-0.75,12:-0.10},
+2026:{1:-1.60,2:2.67,3:-13.92,4:11.87,5:-3.76,6:-2.12}};
+const V1={2018:{2:-7.66,3:-0.41,4:6.33,5:-4.15,6:-8.02,7:2.54,8:5.52,9:-9.39,10:-8.93,11:4.84,12:-1.94},
+2019:{1:2.48,2:-1.57,3:4.28,4:-2.25,5:-0.80,6:0.88,7:-7.37,8:-1.70,9:6.54,10:4.86,11:1.43,12:0.31},
+2020:{1:3.66,2:1.05,3:-10.46,4:9.69,5:-3.54,6:9.39,7:0.97,8:5.16,9:-2.88,10:7.33,11:6.53,12:7.84},
+2021:{1:1.66,2:24.38,3:-0.72,4:14.17,5:6.21,6:0.35,7:4.69,8:-2.81,9:6.22,10:3.55,11:4.12,12:-5.46},
+2022:{1:-2.38,2:-6.72,3:7.25,4:-1.03,5:-8.94,6:-0.48,7:9.39,8:8.51,9:0.90,10:5.74,11:4.05,12:-3.06},
+2023:{1:-2.85,2:-1.32,3:-1.47,4:5.32,5:3.03,6:9.36,7:10.49,8:-0.03,9:6.19,10:-4.66,11:16.96,12:14.26},
+2024:{1:9.13,2:7.24,3:-3.40,4:2.57,5:3.84,6:-9.20,7:-0.95,8:-0.07,9:1.03,10:-8.43,11:1.69,12:-0.87},
+2025:{1:-6.35,2:-5.83,3:3.60,4:-2.48,5:-2.01,6:2.54,7:-3.34,8:-2.27,9:2.55,10:3.09,11:-0.79,12:-0.23},
+2026:{1:-1.87,2:2.02,3:-9.34,4:11.87,5:-2.47,6:-1.67}};
+const V2={2018:{2:-6.77,3:0.30,4:6.32,5:-4.47,6:-7.83,7:2.56,8:5.52,9:-10.05,10:-8.66,11:4.77,12:-0.92},
+2019:{1:2.36,2:-1.45,3:4.25,4:-2.45,5:0.76,6:1.49,7:-7.24,8:-0.61,9:7.50,10:4.50,11:1.32,12:0.46},
+2020:{1:4.25,2:2.14,3:-11.19,4:8.95,5:-2.69,6:9.32,7:2.29,8:5.97,9:-2.23,10:4.71,11:6.38,12:7.55},
+2021:{1:1.71,2:23.80,3:-0.72,4:9.79,5:6.24,6:0.79,7:4.85,8:0.24,9:6.15,10:4.09,11:5.80,12:-5.46},
+2022:{1:-2.27,2:-5.91,3:5.25,4:-0.05,5:-7.68,6:-0.47,7:9.23,8:7.69,9:0.41,10:5.38,11:3.12,12:-3.16},
+2023:{1:-2.87,2:-0.96,3:-1.25,4:5.32,5:3.12,6:9.36,7:10.49,8:0.14,9:6.02,10:-4.23,11:16.96,12:13.65},
+2024:{1:9.17,2:7.54,3:-5.40,4:2.21,5:2.60,6:-4.65,7:-0.07,8:-1.73,9:1.35,10:-7.63,11:0.74,12:-0.92},
+2025:{1:-7.10,2:-4.34,3:3.44,4:0.69,5:-0.85,6:2.21,7:-3.03,8:-2.28,9:2.55,10:3.08,11:-0.96,12:-0.26},
+2026:{1:-1.45,2:2.62,3:-8.91,4:11.87,5:-4.83,6:-1.88}};
+const V3={2018:{2:-6.07,3:-0.64,4:6.08,5:-4.92,6:-7.96,7:2.00,8:5.58,9:-8.55,10:-8.83,11:4.86,12:-0.78},
+2019:{1:2.42,2:-0.94,3:4.23,4:-2.29,5:-1.46,6:1.49,7:-6.97,8:-0.45,9:6.67,10:4.50,11:1.68,12:1.38},
+2020:{1:3.29,2:1.12,3:-11.75,4:15.59,5:-2.63,6:9.39,7:2.07,8:5.25,9:-3.57,10:7.30,11:6.60,12:8.11},
+2021:{1:1.43,2:24.38,3:-0.92,4:13.92,5:6.08,6:0.13,7:4.97,8:-0.13,9:6.39,10:3.96,11:5.30,12:-4.99},
+2022:{1:-2.40,2:-7.68,3:7.16,4:-1.23,5:-9.39,6:0.05,7:9.06,8:8.51,9:0.86,10:5.74,11:4.06,12:-3.10},
+2023:{1:-3.03,2:-1.24,3:-1.15,4:5.11,5:3.12,6:9.36,7:10.49,8:0.78,9:6.25,10:-4.65,11:16.96,12:14.26},
+2024:{1:9.13,2:5.20,3:-0.94,4:2.96,5:3.39,6:1.02,7:-1.20,8:0.88,9:0.52,10:-7.82,11:1.88,12:-0.89},
+2025:{1:-6.40,2:-6.00,3:3.68,4:-0.36,5:-0.55,6:2.30,7:-3.45,8:-2.29,9:2.55,10:2.97,11:-0.68,12:-0.26},
+2026:{1:-1.47,2:2.29,3:-8.23,4:11.87,5:-4.71,6:-1.62}};
+const SETS={hm0:V0,hm1:V1,hm2:V2,hm3:V3};
+
+function col(v){if(v==null||isNaN(v))return{bg:'transparent',fg:'var(--muted)'};
+  const cap=15,a=Math.min(Math.abs(v)/cap,1);
+  if(v>=0)return{bg:`rgba(12,163,12,${(0.12+0.72*a).toFixed(2)})`,fg:a>0.5?'#eafaea':'#0a5a0a'};
+  return{bg:`rgba(208,59,59,${(0.12+0.72*a).toFixed(2)})`,fg:a>0.5?'#fdeaea':'#7a1f1f'};}
+function yearTotal(D,y){let t=0,any=false;for(let m=1;m<=12;m++){const v=D[y][m];if(v!=null){t+=v;any=true;}}return any?t:null;}
+
+Object.keys(SETS).forEach(id=>{
+  const D=SETS[id],tb=document.querySelector('#'+id+' tbody');
+  const hr=document.createElement('tr');
+  hr.innerHTML='<th>Year</th>'+months.map(m=>`<th>${m}</th>`).join('')+'<th>Year</th>';
+  tb.appendChild(hr);
+  Object.keys(D).forEach(y=>{
+    const tr=document.createElement('tr');
+    let h=`<td class="yr">${y}</td>`;
+    for(let m=1;m<=12;m++){const v=D[y][m];const c=col(v);
+      h+=`<td style="background:${c.bg};color:${c.fg}">${v==null?'':v.toFixed(1)}</td>`;}
+    const yt=yearTotal(D,y),c=col(yt);
+    h+=`<td style="background:${c.bg};color:${c.fg};font-weight:600">${yt==null?'':(yt>0?'+':'')+yt.toFixed(1)}</td>`;
+    tr.innerHTML=h;tb.appendChild(tr);
+  });
+});
+
+/* year totals side-by-side */
+const yt=document.getElementById('yeartot');
+[2018,2019,2020,2021,2022,2023,2024,2025,2026].forEach(y=>{
+  const cells=[V0,V1,V2,V3].map(D=>{const t=yearTotal(D,y);
+    const cl=t>=0?'win':'los';return `<td class="${cl}">${(t>0?'+':'')+t.toFixed(1)}</td>`;});
+  yt.insertAdjacentHTML('beforeend',`<tr><td>${y}</td>${cells.join('')}</tr>`);
+});
+</script>
+</body>
+</html>

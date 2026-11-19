@@ -1,0 +1,63 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Dealer gamma on Nifty expiry days: what the trade data does and does not show — Aryansh Kabra</title><meta name="description" content="Using a billion NSE trade records flagged by participant class, a classmate and I measured who is short gamma on Nifty weekly expiries in 2022 and tested the popular gamma stories. Most of them found no support."><link rel="canonical" href="https://ary-k7.github.io/work/dealer-gamma-nse/"><meta name="color-scheme" content="light dark"><meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#0f1114" media="(prefers-color-scheme: dark)"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta property="og:type" content="article"><meta property="og:site_name" content="Aryansh Kabra"><meta property="og:title" content="Dealer gamma on Nifty expiry days: what the trade data does and does not show — Aryansh Kabra"><meta property="og:description" content="Using a billion NSE trade records flagged by participant class, a classmate and I measured who is short gamma on Nifty weekly expiries in 2022 and tested the popular gamma stories. Most of them found no support."><meta property="og:url" content="https://ary-k7.github.io/work/dealer-gamma-nse/"><meta property="og:image" content="https://ary-k7.github.io/og.png"><meta name="twitter:card" content="summary_large_image"><link rel="stylesheet" href="/_astro/BaseLayout.Cy43kN1Z.css"><style>.case-nav[data-astro-cid-iwf3uwlx]{margin-top:var(--s-8);padding-top:var(--s-5);border-top:1px solid var(--rule-strong)}ul[data-astro-cid-iwf3uwlx]{gap:var(--s-5);grid-template-columns:repeat(2,minmax(0,1fr));margin:0;padding:0;list-style:none;display:grid}li[data-astro-cid-iwf3uwlx]{gap:var(--s-1);flex-direction:column;display:flex}.next[data-astro-cid-iwf3uwlx]{text-align:right;align-items:flex-end}li[data-astro-cid-iwf3uwlx] a[data-astro-cid-iwf3uwlx]{font-family:var(--font-display);font-size:var(--text-lg);line-height:1.25}p[data-astro-cid-iwf3uwlx]{margin-top:var(--s-6)}@media (width<=560px){ul[data-astro-cid-iwf3uwlx]{grid-template-columns:minmax(0,1fr)}.next[data-astro-cid-iwf3uwlx]{text-align:left;align-items:flex-start}}.chart[data-astro-cid-nwemw2sb]{margin:var(--s-7) 0 0;max-width:46rem}.title[data-astro-cid-nwemw2sb]{font-size:var(--text-xl);margin-bottom:var(--s-2)}.legend[data-astro-cid-nwemw2sb]{margin:var(--s-4) 0 var(--s-2);gap:var(--s-2) var(--s-5);font-size:var(--text-sm);flex-wrap:wrap;padding:0;list-style:none;display:flex}.legend[data-astro-cid-nwemw2sb] li[data-astro-cid-nwemw2sb]{align-items:center;gap:.5em;display:inline-flex}.swatch[data-astro-cid-nwemw2sb]{border-top:2.5px solid var(--accent);width:1.4em;height:0}.swatch[data-astro-cid-nwemw2sb].is-extra{border-top-style:dashed}.swatch[data-astro-cid-nwemw2sb].is-benchmark{border-top-color:var(--ink-3)}svg[data-astro-cid-nwemw2sb]{width:100%;height:auto;overflow:visible}.grid[data-astro-cid-nwemw2sb]{stroke:var(--rule);stroke-width:1px}.grid[data-astro-cid-nwemw2sb].is-base{stroke:var(--ink-3);stroke-dasharray:2 4}.axis[data-astro-cid-nwemw2sb]{font-family:var(--font-mono);fill:var(--ink-3);font-size:11px}.line[data-astro-cid-nwemw2sb]{fill:none;stroke:var(--accent);stroke-width:2.2px;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}.line[data-astro-cid-nwemw2sb].is-extra{stroke-dasharray:6 4;stroke-width:1.8px}.line[data-astro-cid-nwemw2sb].is-benchmark{stroke:var(--ink-3);stroke-width:1.6px}.basis[data-astro-cid-nwemw2sb]{margin-top:var(--s-3);max-width:var(--measure)}.meta[data-astro-cid-qj36m7ki]{align-items:center;gap:var(--s-3) var(--s-5);flex-wrap:wrap;display:flex}.is-draft[data-astro-cid-qj36m7ki]{border-color:var(--warn);color:var(--warn)}.stats[data-astro-cid-qj36m7ki]{margin-bottom:var(--s-5)}.body[data-astro-cid-qj36m7ki]{padding-bottom:var(--s-2)}.body[data-astro-cid-qj36m7ki]>h2:first-child{margin-top:var(--s-5)}article[data-astro-cid-qj36m7ki]{padding-bottom:var(--s-8)}
+</style></head><body><a class="skip-link" href="#main">Skip to content</a><header class="site-header" data-astro-cid-nen7h5rs><div class="container bar" data-astro-cid-nen7h5rs><a class="brand" href="/" aria-label="Aryansh Kabra, home" data-astro-cid-nen7h5rs>Aryansh Kabra</a><nav aria-label="Main" data-astro-cid-nen7h5rs><ul data-astro-cid-nen7h5rs><li data-astro-cid-nen7h5rs><a href="/#work" aria-current="page" data-astro-cid-nen7h5rs>Work</a></li><li data-astro-cid-nen7h5rs><a href="/notes/" data-astro-cid-nen7h5rs>Notes</a></li><li data-astro-cid-nen7h5rs><a href="/reading/" data-astro-cid-nen7h5rs>Reading</a></li><li data-astro-cid-nen7h5rs><a href="/resume/" data-astro-cid-nen7h5rs>Resume</a></li></ul></nav></div></header><main id="main"><article class="container" data-astro-cid-qj36m7ki><header class="page-head" data-astro-cid-qj36m7ki><p class="eyebrow" data-astro-cid-qj36m7ki>IIMA project course · Sep – Nov 2026</p><h1 data-astro-cid-qj36m7ki>Dealer gamma on Nifty expiry days: what the trade data does and does not show</h1><p class="lede" data-astro-cid-qj36m7ki>Using a billion NSE trade records flagged by participant class, a classmate and I measured who is short gamma on Nifty weekly expiries in 2022 and tested the popular gamma stories. Most of them found no support.</p><div class="meta" data-astro-cid-qj36m7ki><span class="status is-completed" data-astro-cid-qj36m7ki>Completed</span><ul class="tags" aria-label="Tags" data-astro-cid-qj36m7ki><li class="tag" data-astro-cid-qj36m7ki>Options microstructure</li><li class="tag" data-astro-cid-qj36m7ki>Gamma</li><li class="tag" data-astro-cid-qj36m7ki>NSE</li><li class="tag" data-astro-cid-qj36m7ki>Out-of-sample testing</li><li class="tag" data-astro-cid-qj36m7ki>Joint work</li></ul></div></header><dl class="stats" data-astro-cid-qj36m7ki><div data-astro-cid-qj36m7ki><dt data-astro-cid-qj36m7ki>NIFTY trade records parsed</dt><dd data-astro-cid-qj36m7ki>1.03 bn</dd></div><div data-astro-cid-qj36m7ki><dt data-astro-cid-qj36m7ki>Expiry days, core sample</dt><dd data-astro-cid-qj36m7ki>32</dd></div><div data-astro-cid-qj36m7ki><dt data-astro-cid-qj36m7ki>Contract-minutes with fitted Greeks</dt><dd data-astro-cid-qj36m7ki>2.54 m</dd></div><div data-astro-cid-qj36m7ki><dt data-astro-cid-qj36m7ki>Pre-registered primary tests</dt><dd data-astro-cid-qj36m7ki>8</dd></div></dl><div class="prose body" data-astro-cid-qj36m7ki><p>This is joint work with a classmate, supervised by IIMA faculty, so “we” below means the two of us.</p>
+<h2 id="the-question">The question</h2>
+<p>Common market stories about dealer gamma: dealers short gamma amplify moves, gamma walls attract the price, expiries pin to big strikes. NSE’s trade-level archive flags each side of every trade as proprietary, client or custodian, and as algorithmic or not. We used that to test whether the stories hold on Nifty weekly expiries.</p>
+<p>The short answer: proprietary accounts are short gamma almost all the time, but the gamma levels that the stories rely on predicted nothing we could measure.</p>
+<h2 id="what-we-did">What we did</h2>
+<ul>
+<li>Parsed NSE’s fixed-width trade archive for 2022: 1,025,336,120 NIFTY trade records on 32 expiry days, each source file checked against the exchange checksum.</li>
+<li>Fitted a per-minute volatility smile from trade prices, with the forward from put-call parity, and computed Black-76 Greeks: 2,536,500 contract-minutes, median fit error 1.8 vol points.</li>
+<li>Rebuilt each expiring contract’s dealer position from its first trading day instead of assuming zero at the open (six expiries have truncated histories).</li>
+<li>Built a 213-day panel with order numbers and checked a “later order number is the aggressor” rule against the order archive: 97.1% agreement on 1,943,232 trades.</li>
+<li>Pre-registered the tests with a chronological split (Jan–Jun development, Jul–Sep validation, Oct–Dec locked), then ran walk-forward forecasts with false-discovery-rate control over eight primary tests.</li>
+</ul>
+<h2 id="what-we-found">What we found</h2>
+<div class="table-scroll">
+<table>
+<thead>
+<tr>
+<th>Claim tested</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dealers are short gamma</td>
+<td>Yes. Proprietary gamma is negative at the open of all 32 expiries and in at least 98% of minutes; clients are long</td>
+</tr>
+<tr>
+<td>Dealer flow predicts returns out of sample</td>
+<td>No. Gains at 1, 5 and 15 minutes of 0.04%, 0.01% and −0.04%, none significant</td>
+</tr>
+<tr>
+<td>Gamma forecasts volatility</td>
+<td>No, once implied volatility is controlled</td>
+</tr>
+<tr>
+<td>Expiries pin to strikes</td>
+<td>No. Mean distance 11.6 points against 12.5 under a uniform benchmark (KS p = 0.49)</td>
+</tr>
+<tr>
+<td>Gamma walls attract the settlement</td>
+<td>No better than the at-the-money strike</td>
+</tr>
+<tr>
+<td>Dealers hedge in futures</td>
+<td>Not within 15 minutes; about 15% of the required hedge appears over the session</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Two results did hold. Algorithmic accounts make 92.8% of proprietary trades and sit on at least one side of 74.3% of expiring-weekly volume. And proprietary-algo delta flow is followed by an index move of about 0.1 basis point per standard deviation of one-second flow that does not reverse within 20 minutes. Client flow has the same sign, though, and futures returns explain about a quarter of it, so it is not evidence that dealers are informed.</p>
+<h2 id="what-would-break-this">What would break this</h2>
+<ul>
+<li>Participant flags identify classes, not firms. “Proprietary and algorithmic” is a proxy for market makers.</li>
+<li>Only Nifty options and futures were extracted, so hedges in other instruments are invisible. That alone could explain the missing futures hedge.</li>
+<li>18 of 52 expiries were lost to file-server faults, possibly not at random. Gamma-level results rest on 26 days, from one year, before SEBI’s 2024 expiry changes.</li>
+<li>The aggressor rule was validated on one 15-minute window.</li>
+<li>The settlement proxy is a simple average, not NSE’s official closing price.</li>
+<li>A 0.1 basis point effect has no obvious economic value.</li>
+</ul>
+<h2 id="what-i-would-do-next">What I would do next</h2>
+<p>Open the locked Oct–Dec block once, as planned, and extend the sample past the 2024 expiry changes.</p>
+</div><nav class="case-nav" aria-label="More work" data-astro-cid-iwf3uwlx><ul data-astro-cid-iwf3uwlx><li class="prev" data-astro-cid-iwf3uwlx><span class="eyebrow" data-astro-cid-iwf3uwlx>Previous</span><a href="/work/auxesis-macro-note-us-midterms/" data-astro-cid-iwf3uwlx>Three ballots, one barrel: the US midterms, crude and Indian markets</a></li><li class="next" data-astro-cid-iwf3uwlx><span class="eyebrow" data-astro-cid-iwf3uwlx>Next</span><a href="/work/amara-raja-value-pitch/" data-astro-cid-iwf3uwlx>Amara Raja: a buy case, a sell case and a narrow call</a></li></ul><p data-astro-cid-iwf3uwlx><a class="link-arrow" href="/#work" data-astro-cid-iwf3uwlx>Selected work</a></p></nav></article></main><footer class="site-footer" data-astro-cid-jo6i4kqk><div class="container inner" data-astro-cid-jo6i4kqk><p class="small faint" data-astro-cid-jo6i4kqk>© 2026 Aryansh Kabra. Views are my own.</p><ul data-astro-cid-jo6i4kqk><li data-astro-cid-jo6i4kqk><a href="https://x.com/ary_k7" rel="me noopener" data-astro-cid-jo6i4kqk>X / Twitter</a></li><li data-astro-cid-jo6i4kqk><a href="https://www.linkedin.com/in/aryansh-kabra-bb87aa190/" rel="me noopener" data-astro-cid-jo6i4kqk>LinkedIn</a></li><li data-astro-cid-jo6i4kqk><a href="mailto:aryanshkabra@gmail.com" data-astro-cid-jo6i4kqk>Email</a></li></ul></div></footer></body></html>
