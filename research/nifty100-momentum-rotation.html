@@ -8,7 +8,7 @@
 <style>
   :root{
     --ink:#15171c; --ink2:#4a5a52; --muted:#7c8a83; --line:#e3e8e4;
-    --bg:#fbfcfb; --card:#ffffff; --accent:#1d4ed8; --accent2:#3b82f6;
+    --bg:#fbfcfb; --card:#ffffff; --accent:#0a33ff; --accent2:#5c79ff;
     --purple:#4a3aa7; --blue:#2a78d6; --gray:#888780; --red:#d03b3b; --amber:#ba7517;
   }
   *{box-sizing:border-box}
@@ -67,13 +67,13 @@
   @media(max-width:720px){.mxwrap{grid-template-columns:1fr}.wrap{padding:32px 18px 60px}h1{font-size:24px}}
 </style>
 <style id="site-palette">
-:root:root:root, :root:root:root[data-theme]{ --bg:#fff; --card:#fff; --ink:#15171c; --ink2:#454a54; --muted:#737986; --line:#dde2ea; --accent:#1d4ed8; --accent2:#3b82f6; }
+:root:root:root, :root:root:root[data-theme]{ --bg:#fff; --card:#fff; --ink:#15171c; --ink2:#454a54; --muted:#737986; --line:#dde2ea; --accent:#0a33ff; --accent2:#5c79ff; }
 
 
 .site-back{font:13px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;max-width:68rem;margin:0 auto;
   padding:14px 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:baseline;color:#737986;
   border-bottom:1px solid #dde2ea;background:#fff}
-.site-back a{color:#1d4ed8;text-decoration:none;border-bottom:1px solid #1d4ed8}
+.site-back a{color:#0a33ff;text-decoration:none;border-bottom:2px solid #0a33ff}
 @media print{.site-back{display:none}}
 </style>
 <meta name="robots" content="noindex">
@@ -219,7 +219,7 @@ ADANIPOWER · CUMMINSIND · VEDL · TVSMOTOR · CANBK · MUTHOOTFIN · BEL · SH
 <h2><span class="n">07</span>Semi-annual returns vs Nifty 50 &amp; Nifty 500</h2>
 <p>Period returns for the chosen 9m/6m strategy against both index benchmarks, each half measured over the identical trading days. Rebalances land on Jan 1 / Jul 1, so every half-year is exactly one holding period.</p>
 <div class="legend">
-  <span><span class="sq" style="background:#3b82f6"></span>Strategy (9m/6m)</span>
+  <span><span class="sq" style="background:#5c79ff"></span>Strategy (9m/6m)</span>
   <span><span class="sq" style="background:#888780"></span>Nifty 50 B&amp;H</span>
   <span><span class="sq" style="background:#2a78d6"></span>Nifty 500 B&amp;H</span>
 </div>
@@ -272,7 +272,7 @@ new Chart(document.getElementById('c_overlay'),{type:'line',
  data:{labels:ov.map(r=>r.d),datasets:[
   {label:'12-month',data:ov.map(r=>r.m12),borderColor:'#4a3aa7',borderWidth:2,pointRadius:0,tension:.15},
   {label:'3-month',data:ov.map(r=>r.m3),borderColor:'#2a78d6',borderWidth:2,pointRadius:0,tension:.15},
-  {label:'6-month',data:ov.map(r=>r.m6),borderColor:'#3b82f6',borderWidth:2,pointRadius:0,tension:.15},
+  {label:'6-month',data:ov.map(r=>r.m6),borderColor:'#5c79ff',borderWidth:2,pointRadius:0,tension:.15},
   {label:'Nifty 50',data:ov.map(r=>r.n),borderColor:'#888780',borderWidth:2,borderDash:[6,4],pointRadius:0,tension:.15}]},
  options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
   plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.parsed.y.toFixed(0)}}},
@@ -281,7 +281,7 @@ new Chart(document.getElementById('c_overlay'),{type:'line',
 
 const ph=[{o:'+0m',c:30.7},{o:'+1m',c:28.3},{o:'+2m',c:27.4},{o:'+3m',c:25.9},{o:'+4m',c:26.5},{o:'+5m',c:21.4},{o:'+6m',c:20.2},{o:'+7m',c:25.8},{o:'+8m',c:30.6}];
 new Chart(document.getElementById('c_phase'),{type:'bar',
- data:{labels:ph.map(r=>r.o),datasets:[{data:ph.map(r=>r.c),backgroundColor:'#3b82f6',borderRadius:4,barPercentage:.7}]},
+ data:{labels:ph.map(r=>r.o),datasets:[{data:ph.map(r=>r.c),backgroundColor:'#5c79ff',borderRadius:4,barPercentage:.7}]},
  options:{responsive:true,maintainAspectRatio:false,
   plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'CAGR: '+c.parsed.y.toFixed(1)+'%'}}},
   scales:{y:{min:0,title:{display:true,text:'CAGR %',color:muted},ticks:{color:muted,callback:v=>v+'%'},grid:{color:grid}},
@@ -310,7 +310,7 @@ semi.forEach(r=>{
 });
 new Chart(document.getElementById('c_semi'),{type:'bar',
  data:{labels:semi.map(r=>r.p),datasets:[
-  {label:'Strategy',data:semi.map(r=>r.s),backgroundColor:'#3b82f6',borderRadius:3},
+  {label:'Strategy',data:semi.map(r=>r.s),backgroundColor:'#5c79ff',borderRadius:3},
   {label:'Nifty 50',data:semi.map(r=>r.n50),backgroundColor:'#888780',borderRadius:3},
   {label:'Nifty 500',data:semi.map(r=>r.n500),backgroundColor:'#2a78d6',borderRadius:3}]},
  options:{responsive:true,maintainAspectRatio:false,
@@ -333,8 +333,8 @@ function buildMx(id,obj,fmt){
       const v=obj[lb+'_'+rb],a=0.10+0.82*(v-mn)/(mx-mn);
       const td=document.createElement('td');
       td.style.background='rgba(15,110,86,'+a.toFixed(2)+')';
-      td.style.color=a>0.5?'#e8effd':'#1e3a8a';
-      if(lb===9&&rb===6){td.style.outline='2px solid #1d4ed8';td.style.fontWeight='700';}
+      td.style.color=a>0.5?'#e9edff':'#001a8c';
+      if(lb===9&&rb===6){td.style.outline='2px solid #0a33ff';td.style.fontWeight='700';}
       td.textContent=fmt(v);tr.appendChild(td);
     });
     tbb.appendChild(tr);
