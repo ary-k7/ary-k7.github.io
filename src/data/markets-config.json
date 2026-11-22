@@ -1,0 +1,535 @@
+{
+  "dataUrl": "https://raw.githubusercontent.com/ary-k7/ary-k7.github.io/data/markets.json",
+  "tape": [
+    "nifty",
+    "sensex",
+    "usdinr",
+    "us10y",
+    "brent",
+    "gold",
+    "sp500",
+    "nasdaq100",
+    "dxy",
+    "btc"
+  ],
+  "boards": [
+    {
+      "id": "india",
+      "title": "India equities",
+      "note": "",
+      "rows": [
+        {
+          "id": "nifty",
+          "name": "Nifty 50",
+          "source": {
+            "type": "tv",
+            "ticker": "NSE:NIFTY"
+          },
+          "seed": {
+            "yahoo": "^NSEI"
+          }
+        },
+        {
+          "id": "sensex",
+          "name": "Sensex",
+          "source": {
+            "type": "tv",
+            "ticker": "BSE:SENSEX"
+          },
+          "seed": {
+            "yahoo": "^BSESN"
+          }
+        },
+        {
+          "id": "banknifty",
+          "name": "Bank Nifty",
+          "source": {
+            "type": "tv",
+            "ticker": "NSE:BANKNIFTY"
+          },
+          "seed": {
+            "yahoo": "^NSEBANK"
+          }
+        },
+        {
+          "id": "indiavix",
+          "name": "India VIX",
+          "source": {
+            "type": "tv",
+            "ticker": "NSE:INDIAVIX"
+          },
+          "seed": {
+            "yahoo": "^INDIAVIX"
+          }
+        },
+        {
+          "id": "midcap",
+          "name": "Nifty Midcap 100",
+          "source": {
+            "type": "tv",
+            "ticker": "NSE:CNXMIDCAP"
+          },
+          "seed": {
+            "yahoo": "^CNXMIDCAP"
+          }
+        },
+        {
+          "id": "smallcap",
+          "name": "Nifty Smallcap 100",
+          "source": {
+            "type": "tv",
+            "ticker": "NSE:CNXSMALLCAP"
+          },
+          "seed": {
+            "yahoo": "^CNXSC"
+          }
+        }
+      ]
+    },
+    {
+      "id": "global",
+      "title": "Global equities",
+      "note": "",
+      "rows": [
+        {
+          "id": "sp500",
+          "name": "S&P 500",
+          "source": {
+            "type": "tv",
+            "ticker": "SP:SPX"
+          },
+          "seed": {
+            "yahoo": "^GSPC"
+          }
+        },
+        {
+          "id": "nasdaq100",
+          "name": "Nasdaq 100",
+          "source": {
+            "type": "tv",
+            "ticker": "NASDAQ:NDX"
+          },
+          "seed": {
+            "yahoo": "^NDX"
+          }
+        },
+        {
+          "id": "dow",
+          "name": "Dow Jones",
+          "source": {
+            "type": "tv",
+            "ticker": "DJ:DJI"
+          },
+          "seed": {
+            "yahoo": "^DJI"
+          }
+        },
+        {
+          "id": "dax",
+          "name": "DAX",
+          "source": {
+            "type": "tv",
+            "ticker": "XETR:DAX"
+          },
+          "seed": {
+            "yahoo": "^GDAXI"
+          }
+        },
+        {
+          "id": "ftse",
+          "name": "FTSE 100",
+          "source": {
+            "type": "tv",
+            "ticker": "FTSE:UKX"
+          },
+          "seed": {
+            "yahoo": "^FTSE"
+          }
+        },
+        {
+          "id": "nikkei",
+          "name": "Nikkei 225",
+          "source": {
+            "type": "tv",
+            "ticker": "TVC:NI225"
+          },
+          "seed": {
+            "yahoo": "^N225"
+          }
+        },
+        {
+          "id": "hangseng",
+          "name": "Hang Seng",
+          "source": {
+            "type": "tv",
+            "ticker": "HSI:HSI"
+          },
+          "seed": {
+            "yahoo": "^HSI"
+          }
+        },
+        {
+          "id": "vix",
+          "name": "VIX",
+          "source": {
+            "type": "tv",
+            "ticker": "CBOE:VIX"
+          },
+          "seed": {
+            "yahoo": "^VIX"
+          }
+        }
+      ]
+    },
+    {
+      "id": "rates",
+      "title": "Rates",
+      "note": "Yields in per cent; changes in basis points. US 2s10s is the 10-year yield minus the 2-year, in basis points.",
+      "rows": [
+        {
+          "id": "us2y",
+          "name": "US 2-year",
+          "unit": "yield",
+          "source": {
+            "type": "tv",
+            "ticker": "TVC:US02Y"
+          },
+          "seed": {
+            "fred": "DGS2"
+          }
+        },
+        {
+          "id": "us10y",
+          "name": "US 10-year",
+          "unit": "yield",
+          "source": {
+            "type": "tv",
+            "ticker": "TVC:US10Y"
+          },
+          "seed": {
+            "fred": "DGS10"
+          }
+        },
+        {
+          "id": "us30y",
+          "name": "US 30-year",
+          "unit": "yield",
+          "source": {
+            "type": "tv",
+            "ticker": "TVC:US30Y"
+          },
+          "seed": {
+            "fred": "DGS30"
+          }
+        },
+        {
+          "id": "us2s10s",
+          "name": "US 2s10s",
+          "unit": "bp",
+          "source": {
+            "type": "spread",
+            "long": "us10y",
+            "short": "us2y"
+          }
+        },
+        {
+          "id": "in10y",
+          "name": "India 10-year",
+          "unit": "yield",
+          "source": {
+            "type": "tv",
+            "ticker": "TVC:IN10Y"
+          }
+        },
+        {
+          "id": "de10y",
+          "name": "Germany 10-year",
+          "unit": "yield",
+          "source": {
+            "type": "tv",
+            "ticker": "TVC:DE10Y"
+          }
+        },
+        {
+          "id": "jp10y",
+          "name": "Japan 10-year",
+          "unit": "yield",
+          "source": {
+            "type": "tv",
+            "ticker": "TVC:JP10Y"
+          }
+        }
+      ]
+    },
+    {
+      "id": "fx",
+      "title": "FX",
+      "note": "",
+      "rows": [
+        {
+          "id": "usdinr",
+          "name": "USD/INR",
+          "source": {
+            "type": "tv",
+            "ticker": "FX_IDC:USDINR"
+          },
+          "seed": {
+            "yahoo": "INR=X"
+          }
+        },
+        {
+          "id": "dxy",
+          "name": "Dollar index",
+          "source": {
+            "type": "tv",
+            "ticker": "TVC:DXY"
+          },
+          "seed": {
+            "yahoo": "DX-Y.NYB"
+          }
+        },
+        {
+          "id": "eurusd",
+          "name": "EUR/USD",
+          "source": {
+            "type": "tv",
+            "ticker": "FX:EURUSD"
+          },
+          "seed": {
+            "yahoo": "EURUSD=X"
+          }
+        },
+        {
+          "id": "usdjpy",
+          "name": "USD/JPY",
+          "source": {
+            "type": "tv",
+            "ticker": "FX:USDJPY"
+          },
+          "seed": {
+            "yahoo": "JPY=X"
+          }
+        },
+        {
+          "id": "gbpusd",
+          "name": "GBP/USD",
+          "source": {
+            "type": "tv",
+            "ticker": "FX:GBPUSD"
+          },
+          "seed": {
+            "yahoo": "GBPUSD=X"
+          }
+        },
+        {
+          "id": "usdcnh",
+          "name": "USD/CNH",
+          "source": {
+            "type": "tv",
+            "ticker": "FX_IDC:USDCNH"
+          },
+          "seed": {
+            "yahoo": "CNH=X"
+          }
+        }
+      ]
+    },
+    {
+      "id": "commodities",
+      "title": "Commodities",
+      "note": "Front-month futures, in US dollars.",
+      "rows": [
+        {
+          "id": "brent",
+          "name": "Brent crude",
+          "source": {
+            "type": "tv",
+            "ticker": "ICEEUR:BRN1!"
+          },
+          "seed": {
+            "yahoo": "BZ=F"
+          }
+        },
+        {
+          "id": "wti",
+          "name": "WTI crude",
+          "source": {
+            "type": "tv",
+            "ticker": "NYMEX:CL1!"
+          },
+          "seed": {
+            "yahoo": "CL=F"
+          }
+        },
+        {
+          "id": "gold",
+          "name": "Gold",
+          "source": {
+            "type": "tv",
+            "ticker": "COMEX:GC1!"
+          },
+          "seed": {
+            "yahoo": "GC=F"
+          }
+        },
+        {
+          "id": "silver",
+          "name": "Silver",
+          "source": {
+            "type": "tv",
+            "ticker": "COMEX:SI1!"
+          },
+          "seed": {
+            "yahoo": "SI=F"
+          }
+        },
+        {
+          "id": "copper",
+          "name": "Copper",
+          "source": {
+            "type": "tv",
+            "ticker": "COMEX:HG1!"
+          },
+          "seed": {
+            "yahoo": "HG=F"
+          }
+        },
+        {
+          "id": "natgas",
+          "name": "Natural gas",
+          "source": {
+            "type": "tv",
+            "ticker": "NYMEX:NG1!"
+          },
+          "seed": {
+            "yahoo": "NG=F"
+          }
+        }
+      ]
+    },
+    {
+      "id": "crypto",
+      "title": "Crypto",
+      "note": "US dollars, traded around the clock.",
+      "rows": [
+        {
+          "id": "btc",
+          "name": "Bitcoin",
+          "source": {
+            "type": "tv",
+            "ticker": "BITSTAMP:BTCUSD"
+          },
+          "seed": {
+            "yahoo": "BTC-USD"
+          }
+        },
+        {
+          "id": "eth",
+          "name": "Ether",
+          "source": {
+            "type": "tv",
+            "ticker": "BITSTAMP:ETHUSD"
+          },
+          "seed": {
+            "yahoo": "ETH-USD"
+          }
+        }
+      ]
+    }
+  ],
+  "calendar": {
+    "source": "tradingview",
+    "daysBack": 274,
+    "daysForward": 61,
+    "countries": [
+      {
+        "code": "US",
+        "label": "US"
+      },
+      {
+        "code": "IN",
+        "label": "India"
+      },
+      {
+        "code": "EU",
+        "label": "Euro area"
+      },
+      {
+        "code": "GB",
+        "label": "UK"
+      },
+      {
+        "code": "JP",
+        "label": "Japan"
+      },
+      {
+        "code": "CN",
+        "label": "China"
+      }
+    ],
+    "presets": [
+      {
+        "id": "nfp",
+        "label": "US non-farm payrolls",
+        "country": "US",
+        "match": "^Non Farm Payrolls$"
+      },
+      {
+        "id": "uscpi",
+        "label": "US CPI",
+        "country": "US",
+        "match": "^(Inflation Rate|Core Inflation Rate|CPI)"
+      },
+      {
+        "id": "pce",
+        "label": "US PCE",
+        "country": "US",
+        "match": "PCE Price Index"
+      },
+      {
+        "id": "fed",
+        "label": "Fed decision",
+        "country": "US",
+        "match": "^(Fed )?Interest Rate( Decision)?$"
+      },
+      {
+        "id": "usgdp",
+        "label": "US GDP",
+        "country": "US",
+        "match": "^GDP Growth Rate QoQ"
+      },
+      {
+        "id": "incpi",
+        "label": "India CPI",
+        "country": "IN",
+        "match": "^(Inflation Rate|CPI)"
+      },
+      {
+        "id": "ingdp",
+        "label": "India GDP",
+        "country": "IN",
+        "match": "^GDP Growth Rate"
+      },
+      {
+        "id": "rbi",
+        "label": "RBI policy",
+        "country": "IN",
+        "match": "RBI Interest Rate"
+      },
+      {
+        "id": "ecb",
+        "label": "ECB decision",
+        "country": "EU",
+        "match": "ECB Interest Rate Decision"
+      },
+      {
+        "id": "boj",
+        "label": "BoJ decision",
+        "country": "JP",
+        "match": "^(BoJ )?Interest Rate( Decision)?$"
+      }
+    ],
+    "mediumBack": 28,
+    "mediumForward": 14
+  }
+}
