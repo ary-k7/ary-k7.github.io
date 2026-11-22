@@ -1,0 +1,55 @@
+# Refreshes markets.json on the `data` branch of the public Pages repository every 30 minutes.
+# Install: copy this file to .github/workflows/markets-refresh.yml in ary-k7/ary-k7.github.io.
+# The `data` branch must contain tools/fetch_markets.py and src/data/markets-config.json
+# (the script reads its config from there), and may already contain markets.json.
+# No secrets are used: every source is a public, keyless endpoint.
+name: Refresh markets data
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: markets-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out the data branch
+        uses: actions/checkout@v4
+        with:
+          ref: data
+          path: data
+          fetch-depth: 1
+
+      - name: Build the new snapshot
+        working-directory: data
+        run: |
+          python3 tools/fetch_markets.py \
+            --config src/data/markets-config.json \
+            --out markets.new.json \
+            --previous markets.json
+
+      - name: Commit if it changed (one amended commit, so the branch does not grow)
+        working-directory: data
+        run: |
+          # `updated` changes every run, so compare everything else.
+          strip() { python3 -c "import json,sys; d=json.load(open(sys.argv[1])); d.pop('updated',None); print(json.dumps(d,sort_keys=True))" "$1" 2>/dev/null || true; }
+          if [ -f markets.json ] && [ "$(strip markets.json)" = "$(strip markets.new.json)" ]; then
+            echo "No change in the data; leaving the branch alone."
+            rm markets.new.json
+            exit 0
+          fi
+          mv markets.new.json markets.json
+          git config user.name "markets-refresh"
+          git config user.email "markets-refresh@users.noreply.github.com"
+          git add markets.json
+          git commit --amend --no-edit || git commit -m "Update markets data"
+          git push --force origin HEAD:data
