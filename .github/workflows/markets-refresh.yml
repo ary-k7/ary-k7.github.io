@@ -1,4 +1,7 @@
-# Refreshes markets.json on the `data` branch of the public Pages repository every 30 minutes.
+# Refreshes markets.json on the `data` branch of the public Pages repository about every 30 minutes.
+# GitHub's own schedule proved unreliable here (one run in nine hours), so each run waits
+# 25 minutes and then starts the next one itself. The schedule below is only a safety net that
+# restarts the chain if it ever breaks.
 # Install: copy this file to .github/workflows/markets-refresh.yml in ary-k7/ary-k7.github.io.
 # The `data` branch must contain tools/fetch_markets.py and src/data/markets-config.json
 # (the script reads its config from there), and may already contain markets.json.
@@ -7,11 +10,12 @@ name: Refresh markets data
 
 on:
   schedule:
-    - cron: '*/30 * * * *'
+    - cron: '17 */2 * * *'
   workflow_dispatch:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: markets-refresh
@@ -20,7 +24,7 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 45
     steps:
       - name: Check out the data branch
         uses: actions/checkout@v4
@@ -53,3 +57,11 @@ jobs:
           git add markets.json
           git commit --amend --no-edit || git commit -m "Update markets data"
           git push --force origin HEAD:data
+
+      - name: Start the next run in 25 minutes
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          sleep 1500
+          gh workflow run markets-refresh.yml --repo "$GITHUB_REPOSITORY" --ref main
